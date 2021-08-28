@@ -1,38 +1,55 @@
-.card {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  margin: 30px;
-  min-height: 30rem;
-}
-form {
-  max-width: 350px;
-  border-radius: 5px;
-  padding: 20px;
-  box-shadow: 0px 3px 24px -8px rgba(0, 0, 0, 0.75);
+body{
+  display: flex;
+  justify-content: center;
 }
 
-.name-field {
-  margin-bottom: 40px;
+.chat-card,.game-card{
+  background-color: rgba(255, 0, 179, 0.329);
+  width: 80rem;
+  padding: 2rem;
 }
 
-button {
-  margin-top: 20px;
-  padding: 10px;
-  background: transparent;
-  border-radius: 5px;
+form{
+  background-color: azure;
+  width: 70rem;
+  padding: 2rem;
+  box-shadow: 0 0 2rem black;
+  border-radius: 2rem;
 }
 
-.render-chat {
-  max-width: 350px;
-  border-radius: 5px;
-  padding: 20px;
-  box-shadow: 0px 3px 24px -8px rgba(0, 0, 0, 0.75);
+.name-field{
+  margin-bottom: 1.5rem;
+}
+.render-chat{
+  position: absolute;
+  top: 3rem;
+  right: 10rem;
+  background-color: rgba(247, 0, 255, 0.678);
+  padding: 1rem;
+  width: 50rem;
+  border-radius: 2rem;
+  height: 15rem;
+  overflow-y: scroll;
 }
 
-h3 {
-  color: #2f72da;
+.game-card h2,.game-card p,.number-field,.game-btn,.render-game{
+  display: flex;
+  justify-content: center;
 }
 
-span {
-  color: black;
+.render-game{
+  background-color: rgb(2, 113, 117);
+  width: 80rem;
+  box-shadow: 0 0 1rem rgb(0, 0, 0);
+  border-radius: 2rem;
+}
+.render-game .output{
+  color: aliceblue;
+}
+.game-btn button,.message-btn{
+  width: 150px;
+  height: 50px;
+  background-color: brown;
+  color: white;
+  margin-top: 1rem;
 }

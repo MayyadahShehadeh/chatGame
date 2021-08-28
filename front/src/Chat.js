@@ -4,6 +4,7 @@ import io from "socket.io-client"
 import "./App.css"
 
 function App() {
+
 	const [ state, setState ] = useState({ message: "", name: "" })
 	const [ chat, setChat ] = useState([]);
 	const [ game, setGame] = useState([]);
@@ -16,8 +17,8 @@ function App() {
 			socketRef.current.on("message", ({ name, message }) => {
 				setChat([ ...chat, { name, message } ])
 			})
-			socketRef.current.on("game", ({ number,name }) => {
-				setGame([ ...game, { number,name } ])
+			socketRef.current.on("game", ({ number,name,username }) => {
+				setGame([ ...game, { number,name,username } ])
 			})
 			return () => socketRef.current.disconnect()
 		},
@@ -37,15 +38,17 @@ function App() {
 		
 	}
 
-	const onClickbtn = () => {
-		const { name, message } = state
+	const onClickbtn = (e) => {
+		const { name,username } = state
 		let number =document.getElementById('gameNumber').value;
 		console.log(number);
-		socketRef.current.emit('game',{number,name});
+		socketRef.current.emit('game',{number,name,username});
+		e.preventDefault()
 		
 	}
 
 	const renderChat = () => {
+		
 		return chat.map(({ name, message }, index) => (
 			<div key={index}>
 				<h3>
@@ -56,21 +59,20 @@ function App() {
 	}
 
 	const renderGame = () => {
-		
-		console.log(game);
-		return game.map(({number,name}, index) => (
+		return game.map(({number,name,username}, index) => (
 			<div key={index}>
 				<h3>
-				{name}:<span>{number}</span>
+				the number {number} : <span>{username}</span>
 				</h3>
+				{username==='is correct'?<h3>{name} the winner is </h3>:<h3></h3>}
 			</div>
 		))
 	}
 	return (
 		<>
-		<div className="card">
+		<div className="card chat-card">
 			<form onSubmit={onMessageSubmit}>
-				<h1>Messenger</h1>
+				<h1>User Information</h1>
 				<div className="name-field">
 					<TextField name="name" onChange={(e) => onTextChange(e)} value={state.name} label="Name" />
 				</div>
@@ -84,27 +86,32 @@ function App() {
 						label="Message"
 					/>
 				</div>
-				<button>Send Message</button>
+				<button className="message-btn">Send Message</button>
 			</form>
 			<div className="render-chat">
-				<h1>Chat Log</h1>
+				<h1>Chats</h1>
 				{renderChat()}
 			</div>
 		</div>
-		<div className="card">
+		{}
+		<div className="card game-card">
 			<h2>
 				Guess Game
 			</h2><br/>
 			<p>
-				guess the number
+				guess the number between 1 to 5
 			</p><br/>
-			<div className="name-field">
+			<div className="number-field">
 			<TextField name="name" label="enter a number" id='gameNumber' type='number' />
 			</div><br/>
+			<div className="game-btn">
 			<button onClick={onClickbtn}>submit</button><br/>
-			<div className="render-chat">
-				<h1>Number of trying</h1>
+			</div>
+				<h1>Result</h1>
+			<div className="render-game">
+				<div className="output">
 				{renderGame()}
+				</div>
 			</div>
 		</div>
 		</>
